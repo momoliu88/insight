@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Webjoin Insight Dashboard - Recent Activity</title>
+    <link rel="stylesheet" href="/dojo/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="/dojo/dojo/resources/dojo.css">
+	<link href="/styles/style.css" rel="stylesheet" type="text/css"-->
+	<script src='/jquery.js'></script>
+	<script language="javascript">
+    var userid = "<%=@userid %>";
+  </script>
+
+	<link rel="stylesheet" href="/dojo/dojox/grid/enhanced/resources/claro/EnhancedGrid.css">
+	<link rel="stylesheet" href="/dojo/dojox/grid/enhanced/resources/EnhancedGrid_rtl.css">
+	<link id="themeStyles" rel="stylesheet" href="/dojo/dijit/themes/tundra/tundra.css">
+	<style type="text/css">
+		@import "/dojo/dojo/resources/dojo.css";
+			#grid {
+    	width: 1545px;
+    	height: 20em;
+	}
+	#grid2{
+        width: 1545px;
+        height: 20em;
+    }
+	.noimage
+	{
+    	background-image : url('/images/blank.gif')no-repeat;
+	}
+	.claro .dojoxGridCellFocus {
+        border-width: 0px !important;
+        border-style: none!important;
+    }
+		.dojoTabPane {
+			padding : 10px 10px 10px 10px;
+			overflow: auto;
+		}
+		.dijitTreeContainer{
+			height:300px;
+		}
+	</style>
+	<script type="text/javascript" src="/dojo/dojo/dojo.js" 
+		djConfig="isDebug: true"></script>
+	<script type="text/javascript">
+
+	dojo.require("dojo.data.ItemFileReadStore");
+	dojo.require("dojo._base.window");	
+    dojo.require("dojo.data.ItemFileWriteStore");
+	dojo.require("dojo.parser");
+dojo.require("dijit.form.DropDownButton");
+  dojo.require("dijit.DropDownMenu");
+  dojo.require("dijit.MenuItem");
+  
+
+	dojo.require("dojox.grid.LazyTreeGrid");
+    dojo.require("dojox.grid.EnhancedGrid");
+	dojo.require("dojox.grid.DataGrid");
+    dojo.require("dojox.grid.enhanced.plugins.Pagination");    
+	dojo.require("dojox.lang.functional.object");
+    dojo.require("dojox.charting.Chart2D");
+    dojo.require("dojox.charting.action2d.Highlight");
+    dojo.require("dojox.charting.themes.Claro");
+    dojo.require("dojox.charting.action2d.Shake");
+    dojo.require("dojox.charting.action2d.Tooltip");
+    dojo.require("dojox.charting.DataChart");
+    dojo.require("dojox.charting.plot2d.Grid");
+    dojo.require("dojox.charting.themes.PlotKit.green");
+	
+	dojo.require("dijit.Tree");
+	dojo.require("dijit.dijit");
+    dojo.require("dijit.tree.ForestStoreModel");	
+	dojo.require("dijit.form.Button");	
+    dojo.require("dijit.form.HorizontalSlider");
+    dojo.require("dijit.form.HorizontalRule");
+    dojo.require("dijit.form.HorizontalRuleLabels");
+	dojo.require("dijit.layout.ContentPane");
+	dojo.require("dijit.layout.TabContainer");
+	dojo.require("dijit.layout.SplitContainer");
+	dojo.require("dijit.layout.LinkPane");
+	dojo.require("dijit.Tooltip");
+    dojo.require("insight.charting.action2d.StrokeHighlight");
+	</script>
+ <script src='/insight/globalSetting.js' ></script>   
+ <script src='/insight/dropbutton.js'></script>
+ <script src='/insight/ajax_search.js' ></script>
+ <script src='/insight/menubaritem.js'></script>
+<script src="/insight/alltraces.js"></script>
+<script src="/insight/tree2.js"></script>
+<script src='/insight/tracetab.js' ></script>
+
+</head>
+<body class="tundra">
+<div id="header">
+	<div class="insight_logo" alt="webjoin Insight" id="logo"></div>
+</div>
+<div id="navigation">
+	<div id="links">
+    <div id="nav-menu" widgetid="nav-menu"></div>
+  </div>
+</div>
+<div class="page-module" id="showall">
+	<div class="page-module-header">
+
+    <div id="alt_navigation" style="float:right;width:100px;"></div>
+    <div style="float:left"> <h2>All Traces</h2></div>
+    <div style="clear:both"></div>
+	</div>
+	<div class="search" id="searchbar1" style="float:top;">		
+	     <table width="100%" border="0">  
+	    <tr>
+		<td align="left"><input type="text" id="txtSearchEndPoint" name="txtSearch" alt="Search Criteria" onkeyup="if(event.keyCode==13)searchEndPoint();" /> 
+		</td>  
+		</tr></table>	
+	</div>	
+	<div class="page-module-body">
+      <div style="height:150px">
+	  <div id="historytraces"></div>
+	  </div>
+    </div>
+</div>
+<div class="page-module" id="trace" style="visibility:hidden;">
+	<div class="page-module-header">
+		<h2>Trace Detail</h2>
+		<h3 id="trace-detail-time"></h3>
+	</div>
+<div class="search" id="searchbar">		
+	  <table width="100%" border="0">  
+	    <tr>
+		 
+		<td align="left"><input type="text" id="txtSearch" name="txtSearch" alt="Search Criteria" onkeyup="search()"/> 
+		</td>  
+		</tr></table>	
+	</div>	
+	<div class="page-module-body">
+		<div id="trace_detail"></div>
+	</div>
+</div>
+</body>
+</html>

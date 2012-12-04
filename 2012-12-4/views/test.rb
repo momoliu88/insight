@@ -1,0 +1,49 @@
+require 'sinatra'
+
+get '/index' do 
+	@name = 'rando'
+	erb :index
+end
+__END__
+@@index
+<html>
+<head>
+<style type="text/css">
+img.bg
+{
+	position:absolute;
+	top:10px;
+	left:100px;
+}
+#cc
+{
+	position:absolute;
+	top:320px;
+	left:545px;
+}
+.cc
+{
+	color:#4F6228;
+	font-size:200%;
+	font-family:Calibri;
+	line-height:1.5
+}
+</style>
+</head>
+<body>
+<img class="bg" src="background.jpg"/>
+<div class="cc" id="cc" style="height:200px;width:500px;overflow-y:scroll;overflow-x:hidden;" >
+	<script>
+		var user = ["abc1@ebupt.com","abc2@ebupt.com","abc3@ebupt.com","abc4@ebupt.com","abc5@ebupt.com","abc6@ebupt.com","abc7@ebupt.com","abc8@ebupt.com","abc9@ebupt.com","abc10@ebupt.com","abc11@ebupt.com"];
+		numVar=user.length;
+		for( i=0;i<numVar;i++){
+		document.write(user[+i]+"</br>");
+		}
+	</script>
+</div>
+<script>
+	var obj = document.getElementById("cc");
+	obj.scrollTop=obj.scrollHeight*(Math.random());
+</script>
+</body>
+</html>

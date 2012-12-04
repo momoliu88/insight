@@ -1,0 +1,128 @@
+<html class="dj_quirks dj_gecko dj_contentbox">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Webjoin Insight Dashboard - Recent Activity</title>
+    <link type="image/x-icon" href="images/favicon.ico" rel="shortcut icon">
+	<link href="/styles/style.css" rel="stylesheet" type="text/css">
+	<script src='/jquery.js'></script>
+	<script>dojoConfig = {parseOnLoad: true}</script>
+    <link rel="stylesheet" href="/dojo/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="/dojo/dojo/resources/dojo.css">
+	<link rel="stylesheet" href="/dojo/dojox/grid/enhanced/resources/claro/EnhancedGrid.css">
+	<link rel="stylesheet" href="/dojo/dojox/grid/enhanced/resources/EnhancedGrid_rtl.css">
+    <script src='/dojo/dojo/dojo.js' data-dojo-config='parseOnLoad: true'></script>
+  <script language="javascript">
+    var userid = "<%=@userid %>";
+	var barDiv = dojo.byId("dijit_MenuBarItem_3");
+//	dojo.connect(barDiv, "onclick", function(evt){
+//		    window.location.href="/all_traces/"+userid;
+//	});
+  </script>
+	<script src='/insight/globalSetting.js' ></script>
+	<script src='/insight/traceHistory2.js' ></script>
+    <script src='/insight/tree2.js' ></script>
+	<script src='/insight/traces.js' ></script>
+	<script src='/insight/ajax_search.js' ></script>
+	<script src='/insight/tracetab.js' ></script>
+	<style>
+	@import "/dojo/dojo/resources/dojo.css";
+	@import "/dojo/dojox/grid/resources/Grid.css";
+	@import "/dojo/dojox/grid/resources/claroGrid.css";
+	#grid {
+    	width: 1545px;
+    	height: 20em;
+	}
+	#grid2{
+        width: 1545px;
+        height: 20em;
+    }
+	.noimage
+	{
+    	background-image : url('images/blank.gif')no-repeat;
+	}
+	.claro .dojoxGridCellFocus {
+        border-width: 0px !important;
+        border-style: none!important;
+    }
+	</style>
+</head>
+<body class="claro">
+<div id="header">
+	<div class="insight_logo" alt="webjoin Insight" id="logo"></div>
+</div>
+<div id="navigation">
+	<div id="links">
+		<div dojoattachevent="onkeypress: _onKeyPress" tabindex="0" role="menubar" dojoattachpoint="containerNode" class="dijitMenuBar dijitMenuPassive" id="nav-menu" widgetid="nav-menu">
+			<div dojoattachevent="onmouseenter:_onHover,onmouseleave:_onUnhover,ondijitclick:_onClick" tabindex="-1" role="menuitem" dojoattachpoint="focusNode" class="dijitReset dijitInline dijitMenuItemLabel dijitMenuItem" aria-labelledby="dijit_MenuBarItem_0_text" style="-moz-user-select: none;" id="dijit_MenuBarItem_0" widgetid="dijit_MenuBarItem_0">
+				<span dojoattachpoint="containerNode" id="dijit_MenuBarItem_0_text">Browse Resources</span>
+			</div>
+			<div dojoattachevent="onmouseenter:_onHover,onmouseleave:_onUnhover,ondijitclick:_onClick" tabindex="-1" role="menuitem" dojoattachpoint="focusNode" class="dijitReset dijitInline dijitMenuItemLabel dijitMenuItem dijitMenuItemSelected dijitSelected" aria-labelledby="dijit_MenuBarItem_1_text" style="-moz-user-select: none;" id="dijit_MenuBarItem_1" widgetid="dijit_MenuBarItem_1">
+				<span dojoattachpoint="containerNode" id="dijit_MenuBarItem_1_text">Recent Activity</span>
+			</div>
+			<div dojoattachevent="onmouseenter:_onHover,onmouseleave:_onUnhover,ondijitclick:_onClick" tabindex="-1" role="menuitem" dojoattachpoint="focusNode" class="dijitReset dijitInline dijitMenuItem dijitMenuItemLabel" aria-labelledby="dijit_MenuBarItem_2_text" style="-moz-user-select: none;" id="dijit_MenuBarItem_2" widgetid="dijit_MenuBarItem_3">
+				<span dojoattachpoint="containerNode" id="dijit_MenuBarItem_2_text">Administration</span>
+			</div>
+<div dojoattachevent="onmouseenter:_onHover,onmouseleave:_onUnhover,ondijitclick:_onClick" tabindex="-1" role="menuitem" dojoattachpoint="focusNode" class="dijitReset dijitInline dijitMenuItem dijitMenuItemLabel" aria-labelledby="dijit_MenuBarItem_2_text" style="-moz-user-select: none;" id="dijit_MenuBarItem_2" widgetid="dijit_MenuBarItem_3">
+				<span dojoattachpoint="containerNode" id="dijit_MenuBarItem_2_text">History Traces</span>
+			</div>
+
+		</div>
+	</div>
+
+<div id="traces" class="page-module">
+	<div class="page-module-header"><h2>Trace History</h2></div>
+	<div class="page-module-body">
+		<div style="width: 1545; height: 150px;" id="trace-windows-chart">
+			<div style="margin: 0px; padding: 0px; border-width: 0px; width: 0px; height: 0px;">
+				<div style="margin: 0px; padding: 0px; border-width: 0px; font: 12px Tahoma,Arial,sans-serif; color: rgb(102, 102, 102); position: relative; left: 1507px; top: 130px; white-space: nowrap;">Live</div>
+			</div>
+
+			<div style="margin: 0px; padding: 0px; border-width: 0px; width: 0px; height: 0px;">
+				<div style="margin: 0px; padding: 0px; border-width: 0px; font: 12px Tahoma,Arial,sans-serif; color: rgb(102, 102, 102); position: relative; left: 46px; top: 130px; white-space: nowrap;">15&nbsp;minutes&nbsp;ago</div>
+			</div>
+			<div id="traceHistory" style="width: 85%; height: 150px;"></div>
+		</div>
+	</div>
+</div>
+
+<div class="page-module" id="traces-window" style="visibility:hidden;">
+	<div class="page-module-header">
+		<h2>Traces</h2><h3 id="trace-time"></h3>
+	</div>
+	<div class="page-module-body table-body" style="width:1557px;" id="gridDiv">
+	</div>
+</div>
+
+<div class="page-module" id="trace" style="visibility:hidden;">	
+    <div class="page-module-header">		
+	  <h2>Trace Detail</h2>		
+	  <h3 id="trace-detail-time"></h3>	
+	</div>	
+	<div class="search" id="searchbar">		
+	  <table width="100%" border="0">  
+	    <tr>
+		<td width=5% align="left"> 
+		  <input type="button" id="cmdSearch" name="cmdSearch" value="Search" alt="Run Search" onclick="search()" />  
+		</td>   
+		<td align="left"><input type="text" id="txtSearch" name="txtSearch" alt="Search Criteria" autocomplete="off" /> 
+		</td>  
+		</tr></table>	
+	</div>	
+	<div class="page-module-body">		
+	<div id="trace_detail" >				
+	<script type="dojo/method" data-dojo-event="onClick" data-dojo-args="dataform">			this.getNodesByItem(dataform)[0].labelNode.innerHTML = dataform[0]				+ " (population: )";	
+	</script>		
+	</div>	
+	</div>	
+</div>
+<div class="page-module-body" id="abc" style="width: 1000px; height: 300px;visibility:hidden;">    <div id="tc1-prog" >	<div id="tc"></div></div></div>
+<div id="footer">
+	<hr>
+	<p>
+		Webjoin Insight <span id="version-number">1.8.3.RELEASE (20120417143651)</span>
+		| Copyright &copy; 2009-2012 Webjoin
+		| All Rights Reserved.
+	</p>
+</div>
+</body>
+</html>
