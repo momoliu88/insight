@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Webjoin Insight Dashboard - Recent Activity</title>
+    <title>Webjoin Insight Dashboard - History Traces</title>
     <link rel="stylesheet" href="/dojo/dijit/themes/claro/claro.css">
     <link rel="stylesheet" href="/dojo/dojo/resources/dojo.css">
 	<link href="/styles/style.css" rel="stylesheet" type="text/css"-->
@@ -16,11 +16,11 @@
 	<style type="text/css">
 		@import "/dojo/dojo/resources/dojo.css";
 			#grid {
-    	width: 1545px;
+    	width: 100%;
     	height: 20em;
 	}
 	#grid2{
-        width: 1545px;
+        width: 100%;
         height: 20em;
     }
 	.noimage
@@ -89,7 +89,7 @@ dojo.require("dijit.form.DropDownButton");
 <script src='/insight/tracetab.js' ></script>
 
 </head>
-<body class="tundra">
+<body class="claro">
 <div id="header">
 	<div class="insight_logo" alt="webjoin Insight" id="logo"></div>
 </div>
@@ -100,9 +100,8 @@ dojo.require("dijit.form.DropDownButton");
 </div>
 <div class="page-module" id="showall">
 	<div class="page-module-header">
-
     <div id="alt_navigation" style="float:right;width:100px;"></div>
-    <div style="float:left"> <h2>All Traces</h2></div>
+    <div style="float:left"> <h2 class="webjoinh2">All Traces</h2></div>
     <div style="clear:both"></div>
 	</div>
 	<div class="search" id="searchbar1" style="float:top;">		
@@ -120,8 +119,8 @@ dojo.require("dijit.form.DropDownButton");
 </div>
 <div class="page-module" id="trace" style="visibility:hidden;">
 	<div class="page-module-header">
-		<h2>Trace Detail</h2>
-		<h3 id="trace-detail-time"></h3>
+		<h2 class="webjoinh2">Trace Detail</h2>
+		<h3 class="webjoinh2" id="trace-detail-time"></h3>
 	</div>
 <div class="search" id="searchbar">		
 	  <table width="100%" border="0">  

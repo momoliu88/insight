@@ -3,9 +3,10 @@ require 'json'
 module Preprocessor
 	def validate_json? str
 		begin
-			JSON.parse(str)
+			JSON.parse(str,:max_nesting => 100)
 			return true 
 		rescue Exception => e
+			Log.log.warn("parse exception #{e}")
 			return false
 		end
 	end

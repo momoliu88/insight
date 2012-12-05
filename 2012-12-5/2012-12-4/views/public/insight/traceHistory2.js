@@ -24,7 +24,7 @@ showChart = function()
   var url = tracesUrl;
 	maxDuration=0;
  // clear_env();
-	$.ajax({type:"get",url:url,async : true,error : function(){clear_env();return;}, success : function(data)
+	$.ajax({method: 'GET',type:"get",url:url,async : true,error : function(){clear_env();return;}, success : function(data)
 	{	                  	      
 		var thedata = eval(data);
     if(thedata==""||thedata==null) return

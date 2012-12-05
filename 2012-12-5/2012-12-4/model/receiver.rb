@@ -8,16 +8,20 @@ module Receiver
 
   def receive datas
     datas.each do|data|
-      store data if validate_json?data
+	  if validate_json?data
+	    store data
+	  else
+		Log.log.warn("#{data} is not a valid json")
+	  end
     end
   end
   def store data
+	p "store data"
     trace = Trace.new(data)
     user = trace.userid
     trace.persist
   	Trace.cache.add(user,trace)
     users=Trace.cache.traces.keys.join(";")	
-	p trace.traceid
   end
 end
 

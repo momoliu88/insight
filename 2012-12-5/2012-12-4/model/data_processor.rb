@@ -39,7 +39,6 @@ module DataProcessor
 		if keyword and trace.endpoint =~ /#{keyword}/i
 	      _inner_map["matched"]=1
 			_inner_map["endpoint"]=trace.endpoint.gsub(/(#{keyword})/i,'<font style="BACKGROUND-COLOR:yellow">\1</font>')
-		  p _inner_map["endpoint"]
 		else
 		  _inner_map["matched"]=0
 		end
@@ -82,7 +81,6 @@ module DataProcessor
   end 
     
   def add_to_group keyword,value,groups,trace,searchkeyword
-	p "keyword #{keyword} => value #{value}"
     finded = false
     groups.each do |group|
       if value.eql? group[keyword]
@@ -237,7 +235,10 @@ module DataProcessor
   
   def trace_detail trace,isSearch,keyword,isInTime
     outputs=templater_trace trace,isSearch,keyword,isInTime
-	  outputs.to_json
+	#  outputs.to_json
+	JSON.pretty_generate(outputs,:max_nesting => 100) 
+	#:max_nesting => 100
+
   end
   
   def get_all_traceids  userid

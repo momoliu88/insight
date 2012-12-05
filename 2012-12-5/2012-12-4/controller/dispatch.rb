@@ -18,12 +18,17 @@ scheduler.every '15s' do
     if (Trace.cache.active_traces_in_file.has_key? key) &&(!Trace.cache.active_traces_in_file[key].empty?)
       Trace.cache.active_traces_in_file[key].each do |k,v|
         trace=Trace.get_trace key,v
+		p "add to traces #{trace.traceid}"
         traces << trace
       end
 	end
-    value.each{|item|traces << item}
+	p "size #{value.size}"
+    value.each{|item|
+	  p "cache add to traces: #{item.traceid}"
+	  traces << item
+	}
     Tracelist[key]=group_by_time Time.now.to_f*1000,15,15*1000,traces
-  end
+    end
   end
 end
 #BASE_PATH = "/Users/xiaoqinliu/test-insight/"
@@ -41,7 +46,6 @@ get '/index' do
 end
 
 post '/receive' do 
-  pp params.values
   receive params.values
 end
 
@@ -133,7 +137,8 @@ get '/user/:name/groupby/:keyword/search/:searchkeyword' do
   return unless traceids
   groups = group_at_index_by (keyword,traceids,user,searchkey) unless traceids.empty?
   result = Template.template_groupby groups,keyword,searchkey
-  result.to_json if result
+ # result.to_json if result
+ JSON.pretty_generate(result,:max_nesting => 100) if result 
 end
 get '/user/:name/groupby/:keyword' do  
   #return traces in group  

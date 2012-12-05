@@ -93,7 +93,6 @@ module Template
 	tracdetail["start_time"]=trace.start_time_ns
 	tracdetail["operation_signature"]=trace.endpoint
 	stime =(trace.start_time/1000.0)
-	p "starttime #{stime}"
 	stime=Time.at(stime).strftime("%H:%M:%S")
 	dutions=tracdetail["duration"]/1000000.0
 	tracdetail["start_time_str"]="#{stime} ( #{dutions} ms)"

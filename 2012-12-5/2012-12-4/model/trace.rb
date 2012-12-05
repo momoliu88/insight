@@ -15,8 +15,10 @@ class Trace
   @@cache = TraceCache.new(1024*64,15*60)
   include DataProcessor
   include Comparable
+  IMAGE=["jpeg","png","gif"]
+  AUDIO=["mpeg"]
   def initialize data 
-    @data = JSON.parse data
+    @data = JSON.parse data,:max_nesting => 100
     @userid = @data["user_id"]
     @duration = @data["trace_duration"]
     @traceid = @data["trace_id"]
@@ -24,21 +26,41 @@ class Trace
     @type = @data["trace_group"]
     @start_time = @data["trace_start_time"].to_i
     @start_time_ns = @data["trace_start_time_ns"].to_i
-    @frames = @data["frames"]
+    @frames =filter_frames @data["frames"]
     @endpoint = @data["endpoint"]
     @http_response =  @data["http_response"]||nil
     @http_request = @data["http_request"]||nil
-    pp @http_request
-	if (@http_request && @http_request.class==Hash)
-	  filter @http_request,"headers"
-	  filter @http_request,"cookies"
-	end
-	if (@http_response && @http_response.class==Hash)
+   # pp @http_request
+	@need_encode = false
+  if (@http_request && @http_request.class==Hash)
+    filter @http_request,"headers"
+    filter @http_request,"cookies"
+  end
+  if (@http_response && @http_response.class==Hash)
       filter @http_response,"headers"
-	end
-	
+  end
+  
     @frame_tree_root_node = createTree(self)
   end
+ #filter frames 
+  def filter_frames aFrames
+    aFrames.each do |hsFrame|
+      hsFrame.each do |key,value|
+        if key=="frames"
+          filter_frames value
+        elsif key=="desc"
+          value.each do |e|
+              e["params"].delete_invalid_entrys Configuration::INVALID_VALUES,:value  
+          end
+            value.delete_if do |item|
+            item["params"].empty?
+          end
+        end
+      end
+    end
+    aFrames
+  end
+
   #search operation_id that matched keyword
   def search keyword
   result = Set.new
@@ -63,7 +85,18 @@ class Trace
   end
   def get_body_type filename
     result = %x(file -b #{filename})
-  return :png if result =~ /png/i
+	IMAGE.each{|item|
+	  if result =~ /#{item}/i
+		@need_encode = true
+	    return "image/#{item}"
+	  end
+	}
+	AUDIO.each{|item|
+	  if result =~ /#{item}/i
+		@need_encode = true
+	    return "audio/#{item}"
+	  end
+	}
 #  return :abnormal unless @http_response['contentLength']
 #  return :abnormal if @http_response['contentLength'] == '-1'
   :normal
@@ -77,7 +110,7 @@ class Trace
   def read_body 
   begin
     body = File.read(body_file_name)
-    return Base64.encode64(body) if [:png,:abnormal].include? @body_type
+    return Base64.encode64(body) if @need_encode
     body.delete("\000")
   rescue Exception => err
     Log.log.warn("#{err}")
@@ -99,7 +132,7 @@ class Trace
     str = Base64.decode64(string)
     if @http_response['contentLength']
       content_len = @http_response['contentLength'].to_i
-	end
+  end
     file = body_file_name
     f = File.new(file,'w')
     str = str[0...content_len]if content_len and content_len !=-1
@@ -138,7 +171,7 @@ class Trace
      dir = File.dirname(file)    
      FileUtils.mkdir_p dir unless  File.exists? dir
      File.open(file,'w') do |f|
-       f.puts JSON.pretty_generate(@data)  
+       f.puts JSON.pretty_generate(@data,:max_nesting => 100)  
      end
    if @http_response
     body_file = write_body @http_response["body"] if @http_response["body"]
@@ -168,8 +201,8 @@ class Trace
   def self.get_trace_from_file path
     data = File.read(path)
     trace = Trace.new data
-	trace.body_type = trace.get_body_type path+"_body"
-	trace
+  trace.body_type = trace.get_body_type path+"_body"
+  trace
   end
   def self.get_user_dir_by_userid userid
     File.join(@@root,userid) 

@@ -1,4 +1,5 @@
-body, div, dl, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+body, div, dl, ul, ol, li, h1, h2.webjoinh2, h3.webjoinh2, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+	background-color:transparent;
 	margin: 0;
 	outline: 0;
 	padding: 0;
@@ -18,7 +19,14 @@ body {
 .dj_gecko body {
 	 overflow-y: scroll;
 }
-
+.subheader {
+  background-color:none;
+  color:#4f565d;
+  font-size: 18px;
+  font-weight: bold;
+font-family: Helvetica sans-serif;
+text-transform: uppercase;
+}
 #header {
 	position: relative;
 	padding: 0.5em 1em;
@@ -35,7 +43,7 @@ body {
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#999999', endColorstr='#6F6F6F');
 }
 
-#header h1, #header h2 {
+#header h1, #header h2.webjoinh2 {
 	color: #FFFFFF;
 	vertical-align: baseline;
 	display: inline;
@@ -48,7 +56,7 @@ body {
 #header h1 .insight {
 	font-weight: bold;
 }
-#header h2 {
+#header h2.webjoinh2 {
 	margin-left: 0.5em;
 	font-size: 16px;
 }
@@ -293,18 +301,18 @@ body {
 	color: #666666;
 }
 
-h2, 
+h2.webjoinh2, 
 .dijitTitlePaneTextNode,
 #page .dijitTitlePaneFocused .dijitTitlePaneTextNode {
 	text-decoration: none;
 }
 
-.page-module-header h3,
-.page-module-body h2 {
+.page-module-header h3.webjoinh2,
+.page-module-body h2.webjoinh2 {
 	font-weight: bold;
 }
 
-* + h2,
+* + h2.webjoinh2,
 .page-module * + .dijitTitlePane {
 	padding-top: 1em;
 }
@@ -528,19 +536,19 @@ label {
 	position: relative;
 }
 
-.page-module-header h2 {
+.page-module-header h2.webjoinh2 {
 	text-transform: uppercase;
-}
+i}
 
-.page-module-header h2,
-.page-module-header h3 {
+.page-module-header h2.webjoinh2,
+.page-module-header h3.webjoinh2 {
 	display: inline;
 	margin-left: 0.5em;
 }
 
 
-.dj_ie .page-module-header h2,
-.dj_ie .page-module-header h3 {
+.dj_ie .page-module-header h2.webjoinh2,
+.dj_ie .page-module-header h3.webjoinh2 {
 	padding-top: 0.1em;
 	padding-bottom: 0.1em;
 }
@@ -871,7 +879,7 @@ code + dl {
 	margin: 0.25em 0.5em;
 } 
 
-.dijitTreeContent > .dijitContentPane h2 {
+.dijitTreeContent > .dijitContentPane h2.webjoinh2 {
 	margin: 0.75em 0 0 0;
 	padding: 0.25em 0.5em;
 	background-color: #FCFCF6;
@@ -879,8 +887,8 @@ code + dl {
 	border-bottom: 1px solid #DEDEDE;
 }
 
-.dijitTreeContent > .dijitContentPane h2:first-child,
-.dijitTreeContent > .dijitContentPane a.sts-link + h2 {
+.dijitTreeContent > .dijitContentPane h2.webjoinh2:first-child,
+.dijitTreeContent > .dijitContentPane a.sts-link + h2.webjoinh2 {
 	margin-top: 0;
 	border-top: none;
 }
@@ -984,8 +992,8 @@ table.dl tr.nolabel td:first-child:after {
 	box-shadow: 0 0 1em #CCC;
 }
 
-#page .dijitTooltipContainer h2,
-#page .dijitTooltipContainer h3 {
+#page .dijitTooltipContainer h2.webjoinh2,
+#page .dijitTooltipContainer h3.webjoinh2 {
 	display: inline;
 	margin-left: 0.5em;
 	font-weight: normal;

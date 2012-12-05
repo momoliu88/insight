@@ -1,5 +1,7 @@
 dojo.require("dijit.layout.TabContainer");
 dojo.require("dijit.layout.ContentPane");
+var imagetype=["png","jpeg","gif"];
+var audiotype=["mpeg"];
 createContent=function(map){
 	var _content='<table class="dl"><tbody>';
 	for(var k in map)
@@ -39,7 +41,7 @@ showTab = function(data){
 	var _content='<table class="dl"><tbody>';
   var cp1 = new dijit.layout.ContentPane({
           title: "Headers",
-		      content:"<h3><hr>Response</h3><hr>"+createContent(resp_headers)+"<h3><hr>Request</h3><hr>"+createContent(req_headers)
+		      content:"<h3 class='webjoinh2'><hr>Response</h3><hr>"+createContent(resp_headers)+"<h3 class='webjoinh2'><hr>Request</h3><hr>"+createContent(req_headers)
           });
   tc.addChild(cp1);
 	
@@ -50,15 +52,33 @@ showTab = function(data){
               this.domNode.removeChild(document.getElementById("innerCanvas"));
          }, 
 	      onShow:function(){
+		  var isimage = false;
+		  console.log(resp["body_encode"]);
+		  for(var k in imagetype)
+			if((resp["body_encode"] == ("image/"+imagetype[k]))
+				||(resp["body_encode"] == ("audio/"+audiotype[k])))
+			{
+				isimage = true;break;
+			}
+		  if (!isimage) return;
+
           var canvas = document.createElement("canvas");
-		  canvas.width="500";
+		 // canvas.width="1500";
+		 // canvas.height="1000";
+		  canvas.width ='100%';
+		    canvas.height='100%';
           var ctx = canvas.getContext("2d");
           canvas.id='innerCanvas';
           var image = new Image();
-		  image.src="data:image/png;base64,"+resp["body"];
+		  console.log(resp["body_encode"]);
+		  image.src="data:"+resp["body_encode"]+";base64,"+resp["body"];
 
+		  console.log("height "+image.naturalWidth);
           image.onload = function() {
-            ctx.drawImage(this, 0, 0);
+			console.log("height "+this.height+' width '+this.width);
+			canvas.width=this.width;
+			canvas.height=this.height;
+            ctx.drawImage(this, 0, 0,this.width,this.height);
           };
           console.log("ctx "+canvas); 
           this.domNode.appendChild(canvas);
@@ -68,7 +88,7 @@ showTab = function(data){
 
 	var cp4 = new dijit.layout.ContentPane({
          title: "Cookies",
-         content: "<h3><hr>Response</h3><hr>"+createContent(resp_cookies)+"<h3><hr>Request</h3><hr>"+createContent(req_cookies)
+         content: "<h3 class='webjoinh2'><hr>Response</h3><hr>"+createContent(resp_cookies)+"<h3 class='webjoinh2'><hr>Request</h3><hr>"+createContent(req_cookies)
 
     });
     tc.addChild(cp4);
